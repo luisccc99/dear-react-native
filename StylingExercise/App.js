@@ -11,6 +11,7 @@ const App = () => {
     return (
         <NavigationContainer>
             <Stack.Navigator>
+                <Stack.Screen name="home" />
                 <Stack.Screen name="ColorPalette" component={ColorPalette} />
                 <Stack.Screen name="ColorDetail" component={ColorDetail} />
             </Stack.Navigator>
