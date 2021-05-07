@@ -25,6 +25,11 @@ const styles = StyleSheet.create({
         paddingVertical: 10,
         marginBottom: 5,
         justifyContent: 'center',
+        shadowColor: '#000',
+        shadowOffset: {width: 0, height: 1},
+        shadowOpacity: 0.3,
+        shadowRadius: 3,
+        elevation: 2
     },
     boxText: {
         textAlign: 'center',
