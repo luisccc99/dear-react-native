@@ -1,11 +1,13 @@
 import React, { useEffect, useState, useCallback } from 'react';
-import { FlatList, StyleSheet } from 'react-native';
+import { FlatList, StyleSheet, TouchableOpacity, Text } from 'react-native';
 import PalettePreview from '../components/PalettePreview';
 
-const Home = ({ navigation }) => {
+const Home = ({ navigation, route }) => {
     const [colorPalettes, setColorPalettes] = useState([]);
     const [isRefreshing, setIsRefreshing] = useState(false);
-
+    const newColorPalette = route.params
+        ? route.params.newColorPalette
+        : undefined;
     const handleColorsApi = useCallback(async () => {
         const response = await fetch('https://color-palette-api.kadikraman.vercel.app/palettes');
         if (response.ok) {
@@ -17,6 +19,12 @@ const Home = ({ navigation }) => {
     useEffect(() => {
         handleColorsApi();
     }, []);
+
+    useEffect(() => {
+        if (newColorPalette) {
+            setColorPalettes(colorPalettes => [newColorPalette, ...colorPalettes]);
+        }
+    }, [newColorPalette]);
 
     const handleRefresh = useCallback(async () => {
         setIsRefreshing(true);
@@ -41,6 +49,12 @@ const Home = ({ navigation }) => {
             )}
             refreshing={isRefreshing}
             onRefresh={handleRefresh}
+            ListHeaderComponent={
+                <TouchableOpacity onPress={() => {
+                    navigation.navigate('ColorPaletteModal')
+                }}>
+                    <Text style={styles.buttonText}>New Color Scheme</Text>
+                </TouchableOpacity>}
         />
     );
 };
@@ -50,6 +64,12 @@ const styles = StyleSheet.create({
         flex: 1,
         paddingHorizontal: 10,
         backgroundColor: 'white',
+    },
+    buttonText: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        color: 'teal',
+        marginVertical: 8
     }
 });
 
