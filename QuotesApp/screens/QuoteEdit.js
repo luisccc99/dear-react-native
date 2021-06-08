@@ -10,29 +10,30 @@ const db = openDatabase(
     (_, e) => console.error(e)
 );
 
-const INSERT_QUOTE = "INSERT INTO quotes (quote, author, about) VALUES(?, ?, ?)";
+const UPDATE_QUOTE = "UPDATE quotes SET quote=?, author=?, about=? WHERE id=?";
 
-const QuoteModal = ({ navigation }) => {
-    navigation.setOptions({ title: 'Agregar Nueva Frase' });
-    const [quote, setQuote] = useState('');
-    const [author, setAuthor] = useState('');
-    const [about, setAbout] = useState('');
+const QuoteEdit = ({ navigation, route }) => {
 
+    navigation.setOptions({ title: 'Editar Frase' });
+    const [quote, setQuote] = useState(route.params.item.quote);
+    const [author, setAuthor] = useState(route.params.item.author);
+    const [about, setAbout] = useState(route.params.item.about);
 
-    const insertNewQuote = useCallback(() => {
-        console.log("yey");
+    const updateQuote = useCallback(() => {
+        console.log(quote, author, about, route.params.item.id);
         if (quote.length == 0 || author.length == 0) {
             Alert.alert("Error", "La frase y el autor son obligatorios.")
         } else {
             db.transaction((tx) => {
-                tx.executeSql(INSERT_QUOTE, [quote, author, about],
-                    (_, results) => {
-                        console.log('duh');
-                        console.log(results.rowsAffected);
+                tx.executeSql(
+                    UPDATE_QUOTE,
+                    [quote, author, about, route.params.item.id],
+                    (tx, results) => {
+
                         if (results.rowsAffected > 0) {
                             Alert.alert(
-                                'Operación Exitosa',
-                                'Se ha agregado una nueva frase.',
+                                "Operación Exitosa",
+                                "La frase ha sido editada con éxito.",
                                 [
                                     {
                                         text: 'OK',
@@ -41,17 +42,16 @@ const QuoteModal = ({ navigation }) => {
                                         }
                                     },
                                 ],
-                                { cancelable: false }
-                            )
+                                { cancelable: false })
                         }
                     },
                     (_, error) => {
-                        Alert.alert("Error", "No se pudo agregar la frase.");
-                        console.error(error.message)
+                        console.log("error", error.message)
                     })
             })
         }
-    }, [quote, author, about])
+    }, [quote, author, about]);
+
     return (
         <View style={styles.container}>
             <ScrollView>
@@ -77,7 +77,7 @@ const QuoteModal = ({ navigation }) => {
                 <Button
                     buttonStyle={styles.buttonAccept}
                     title="Aceptar"
-                    onPress={insertNewQuote}
+                    onPress={updateQuote}
                 />
             </ScrollView>
         </View>
@@ -103,4 +103,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default QuoteModal;
+export default QuoteEdit;
