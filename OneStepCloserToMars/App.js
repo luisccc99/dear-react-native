@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, StatusBar, SafeAreaView } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs'
 import PicOfTheDayScreen from './screens/PicOfTheDayScreen';
@@ -39,7 +39,8 @@ const App = () => {
           name="Opportunity"
           component={OpportunityScreen} />
       </Tab.Navigator>
-    </NavigationContainer >
+    </NavigationContainer>
+
   );
 };
 
