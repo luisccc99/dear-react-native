@@ -2,6 +2,7 @@ import React, { useState, useCallback } from 'react';
 import { API_KEY } from '@env';
 import { Text, View, Image, StyleSheet, ScrollView } from 'react-native';
 import { useEffect } from 'react';
+import FastImage from 'react-native-fast-image';
 
 const BASE_URL = 'https://api.nasa.gov/planetary/apod';
 
@@ -24,9 +25,10 @@ const PicOfTheDayScreen = () => {
         <View style={styles.container}>
             <ScrollView>
                 <Text style={styles.title}>{imageResponse.title}</Text>
-                <Text></Text>
                 <Image
-                    source={{ uri: `${imageResponse.hdurl}` }}
+                    source={{
+                        uri: `${imageResponse.hdurl}`,
+                    }}
                     style={styles.image}
                 />
                 <Text style={styles.textDescription}>{imageResponse.explanation}</Text>
