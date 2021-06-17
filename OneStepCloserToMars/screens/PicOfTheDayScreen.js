@@ -8,7 +8,6 @@ const BASE_URL = 'https://api.nasa.gov/planetary/apod';
 
 const PicOfTheDayScreen = () => {
     const [imageResponse, setImageResponse] = useState({});
-    const [isLoading, setIsLoading] = useState(false);
 
     const handleApodApiCall = useCallback(async () => {
         fetch(`${BASE_URL}?api_key=${API_KEY}`)
@@ -40,7 +39,8 @@ const PicOfTheDayScreen = () => {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1
+        flex: 1,
+        backgroundColor: '#ebebeb'
     },
     title: {
         fontWeight: 'bold',
