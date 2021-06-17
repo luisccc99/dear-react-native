@@ -4,33 +4,30 @@ import { StatusBar, View, StyleSheet, FlatList } from 'react-native';
 import RoverPhoto from '../components/roverPhoto';
 
 const BASE_URL = 'https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos';
+const CURIOSITY_SOL_OFFSET = 37;
 
 const CuriosityScreen = () => {
     const [photos, setPhotos] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
-    const [sol, setSol] = useState(37);
-    const [isEnd, setIsEnd] = useState(false);
+    const [sol, setSol] = useState(CURIOSITY_SOL_OFFSET);
 
     const handleApiCall = useCallback(async () => {
-        if (!isLoading && !isEnd) {
+        if (!isLoading) {
             setIsLoading(true);
             fetch(`${BASE_URL}?camera=FHAZ&sol=${sol}&api_key=${API_KEY}`)
                 .then((response) => response.json())
                 .then((json) => {
-                    console.debug(json.photos.length);
-                    if (json.photos.length >= 0) {
-                        setSol(sol + 1)
-                        setPhotos([...photos, ...json.photos])
-                        setIsLoading(false);
-                    } else {
-                        setIsEnd(true);
-                        setIsLoading(false);
-                    }
+                    console.debug(`Curiosity, sol: ${sol}, photos: ${json.photos.length}`);
+                    // if API response had pagination,
+                    // this would be the place to handle it
+                    setSol(sol + 1)
+                    setPhotos([...photos, ...json.photos])
+                    setIsLoading(false);
                 })
                 .catch((error) => console.error(error));
 
         }
-    }, [sol, isLoading, isEnd, photos]);
+    }, [sol, isLoading, photos]);
 
     useEffect(() => {
         handleApiCall();
@@ -57,9 +54,8 @@ const CuriosityScreen = () => {
                 maxToRenderPerBatch={4}
                 onEndReached={handleApiCall}
                 onEndReachedThreshold={0.5}
-                style={{backgroundColor: '#ebebeb'}}
+                style={{ backgroundColor: '#ebebeb' }}
             />
-
         </View>
     );
 };

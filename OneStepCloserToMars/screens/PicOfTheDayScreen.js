@@ -2,7 +2,6 @@ import React, { useState, useCallback } from 'react';
 import { API_KEY } from '@env';
 import { Text, View, Image, StyleSheet, ScrollView } from 'react-native';
 import { useEffect } from 'react';
-import FastImage from 'react-native-fast-image';
 
 const BASE_URL = 'https://api.nasa.gov/planetary/apod';
 
@@ -12,7 +11,9 @@ const PicOfTheDayScreen = () => {
     const handleApodApiCall = useCallback(async () => {
         fetch(`${BASE_URL}?api_key=${API_KEY}`)
             .then((response) => response.json())
-            .then((json) => setImageResponse(json))
+            .then((json) => {
+                setImageResponse(json)
+            })
             .catch((error) => console.error(error))
     }, []);
 

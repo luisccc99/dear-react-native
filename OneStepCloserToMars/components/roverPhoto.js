@@ -8,7 +8,7 @@ import { useEffect } from 'react/cjs/react.development';
 const RoverPhoto = ({ photo }) => {
     const [date, setDate] = useState('')
     useEffect(() => {
-        setDate(new Date(photo.earth_date).toDateString())
+        setDate(new Date(photo.earth_date).toUTCString().substring(0, 16))
     }, []);
     return (
         <View style={styles.container}>
