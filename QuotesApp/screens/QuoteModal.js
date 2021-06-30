@@ -20,7 +20,6 @@ const QuoteModal = ({ navigation }) => {
 
 
     const insertNewQuote = useCallback(() => {
-        console.log("yey");
         if (quote.length == 0 || author.length == 0) {
             Alert.alert("Error", "La frase y el autor son obligatorios.")
         } else {

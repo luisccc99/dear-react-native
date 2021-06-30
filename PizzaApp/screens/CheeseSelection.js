@@ -4,7 +4,7 @@ import RadioButtonRN from 'radio-buttons-react-native';
 
 const CHEESE_TYPES = [
     {
-        label: "Mozarela"
+        label: "Mozzarella"
     },
     {
         label: "Cheddar"

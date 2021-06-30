@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, StyleSheet, Text, View } from 'react-native';
+import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 const Done = ({ route, navigation }) => {
 
@@ -11,6 +11,9 @@ const Done = ({ route, navigation }) => {
                     style={{width: 200, height: 200}}
                 />
                 <Text style={styles.text}>Tu pizza está lista!</Text>
+                <TouchableOpacity onPress={() => navigation.popToTop()}>
+                    <Text style={[styles.buttonText]}>Volver Al Inicio</Text>
+                </TouchableOpacity>
             </View>
         </View>
     );
@@ -35,6 +38,15 @@ const styles = StyleSheet.create({
         color: 'white',
         fontSize: 17,
         fontWeight: 'bold'
+    },
+    buttonText: {
+        marginTop: 10,
+        color: 'white',
+        fontSize: 17,
+        fontWeight: 'bold',
+        padding: 8,
+        backgroundColor: '#32a852',
+        borderRadius: 5
     }
 });
 

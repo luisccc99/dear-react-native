@@ -1,11 +1,44 @@
 import React from 'react';
-import { TouchableOpacity, View, Text, FlatList, StyleSheet } from 'react-native';
+import { TouchableOpacity, View, Text, FlatList, StyleSheet, Alert } from 'react-native';
+import { openDatabase } from 'react-native-sqlite-storage';
 
+const db = openDatabase(
+    { name: "pizzas_sqlite.db", createFromLocation: 1, },
+    () => console.debug("Connected succesfully"),
+    (_, e) => console.error(e)
+);
+
+const INSERT_PIZZA = "INSERT INTO pizzas (size, dough, cheese, ingredients) VALUES(?, ?, ?, ?)";
 
 const Confirmation = ({ route, navigation }) => {
     const { size, dough, cheese, selectedToppings } = route.params;
 
-    const handleConfirmation = () => { navigation.push("Done", route.params) };
+    const handleConfirmation = () => { 
+        db.transaction((tx) => {
+            tx.executeSql(INSERT_PIZZA, [size, dough, cheese, selectedToppings.join(', ')],
+                (_, results) => {
+                    if (results.rowsAffected > 0) {
+                        Alert.alert(
+                            'Operación Exitosa',
+                            'Se ha agregado una nueva orden.',
+                            [
+                                {
+                                    text: 'OK',
+                                    onPress: () => {
+                                        navigation.push("Done", route.params);
+                                    }
+                                },
+                            ],
+                            { cancelable: false }
+                        )
+                    }
+                },
+                (_, error) => {
+                    Alert.alert("Error", "No se pudo agregar la frase.");
+                    console.error(error.message)
+                })
+        })
+     };
 
     const renderItem = (topping) => {
         return (

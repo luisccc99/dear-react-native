@@ -1,5 +1,4 @@
 import React from 'react';
-import { View, Text, StatusBar, SafeAreaView } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs'
 import PicOfTheDayScreen from './screens/PicOfTheDayScreen';

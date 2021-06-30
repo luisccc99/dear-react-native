@@ -1,6 +1,6 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import { API_KEY } from '@env';
-import { StatusBar, View, StyleSheet, FlatList } from 'react-native';
+import { View, StyleSheet, FlatList } from 'react-native';
 import RoverPhoto from '../components/roverPhoto';
 
 const BASE_URL = 'https://api.nasa.gov/mars-photos/api/v1/rovers/opportunity/photos';
@@ -39,8 +39,6 @@ const OpportunityScreen = () => {
 
     return (
         <View style={styles.container}>
-            <StatusBar
-                backgroundColor='#1b212b' />
             <FlatList
                 data={photos}
                 keyExtractor={keyExtractor}

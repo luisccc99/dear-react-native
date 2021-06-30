@@ -7,7 +7,9 @@ import DoughSelection from './screens/DoughSelection';
 import CheeseSelection from './screens/CheeseSelection';
 import ToppingSelection from './screens/ToppingSelection';
 import Confirmation from './screens/Confirmation'
+import OrdersScreen from './screens/OrdersScreens'
 import Done from './screens/PizzaDone';
+import Menu from './screens/MainMenu';
 
 const Stack = createStackNavigator();
 
@@ -15,6 +17,15 @@ const App = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator>
+        <Stack.Screen
+          name="Menu"
+          component={Menu}
+        />
+        <Stack.Screen
+          name="Orders"
+          component={OrdersScreen}
+          options={{title: 'Ordenes Hechas'}}
+        />
         <Stack.Screen
           name="Size"
           component={SizeSelection}
